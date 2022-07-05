@@ -38,7 +38,12 @@
                     @if (auth()->user()->id == $user->id)
                     <td>Logged In User</td>
                     @else
+                    @if (auth()->user()->role->id == 4)
                     <td><a class="btn border" href="{{route('user.edit', ['user' => $user->id])}}">Add Role</a></td>
+                    @else
+                    <td>Only an admin can add role</td>
+                    @endif
+
                     @endif
 
 
@@ -46,7 +51,12 @@
                 @endforeach
             </tbody>
         </table>
-
+        <div>
+            <p class="text-muted">Click <a href="{{route('category.index')}}">Here</a> to view all categories</p>
+            <p class="text-muted">Click <a href="{{route('tag.index')}}">Here</a> to view all tags</p>
+            <p class="text-muted">Click <a href="{{route('post.index')}}">Here</a> to view all posts</p>
+            <p class="text-muted">Click <a href="{{route('dashboard')}}">Here</a> to go to the dashboard</p>
+        </div>
     </div>
 
 </body>

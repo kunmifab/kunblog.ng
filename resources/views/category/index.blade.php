@@ -40,7 +40,12 @@
                 @endforeach
             </tbody>
         </table>
-
+        <div>
+            <p class="text-muted">Click <a href="{{route('post.index')}}">Here</a> to view all posts</p>
+            <p class="text-muted">Click <a href="{{route('tag.index')}}">Here</a> to view all tags</p>
+            <p class="text-muted">Click <a href="{{route('user.index')}}">Here</a> to view all users</p>
+            <p class="text-muted">Click <a href="{{route('dashboard')}}">Here</a> to go to the dashboard</p>
+        </div>
     </div>
 <form action="" method="POST" id="deleteCat">
     @csrf

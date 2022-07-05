@@ -32,7 +32,7 @@
                 @foreach ($tags as $tag)
                 <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td><a href="{{ route('tag.index', ['slug'=> $tag->slug]) }}">{{$tag->name}}</a></td>
+                    <td>{{$tag->name}}</td>
                     <td>
                         <button class="btn border" onclick="deleteTag(this)" id="deleteBtn" data-id="{{$tag->id}}">Delete</button>
                     </td>
@@ -40,7 +40,12 @@
                 @endforeach
             </tbody>
         </table>
-
+        <div>
+            <p class="text-muted">Click <a href="{{route('category.index')}}">Here</a> to view all categories</p>
+            <p class="text-muted">Click <a href="{{route('post.index')}}">Here</a> to view all posts</p>
+            <p class="text-muted">Click <a href="{{route('user.index')}}">Here</a> to view all users</p>
+            <p class="text-muted">Click <a href="{{route('dashboard')}}">Here</a> to go to the dashboard</p>
+        </div>
     </div>
 <form action="" method="POST" id="deleteTag">
     @csrf
