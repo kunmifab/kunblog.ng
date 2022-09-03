@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Comment;
+use App\Models\Notification;
 use App\Models\Tag;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -27,6 +29,7 @@ class PostController extends Controller
     public function index()
     {
         //
+
         $posts = Post::with('category', 'author')->get();
         return view('post.index', ['posts' => $posts]);
     }
@@ -57,7 +60,8 @@ class PostController extends Controller
 
         $request->validate([
             'title' => 'required|string|max:255',
-            'body' => 'required|string'
+            'body' => 'required|string',
+            'image' => 'required|mimes:png,jpg,jpeg'
 
         ]);
 
@@ -66,11 +70,11 @@ class PostController extends Controller
         $auth_user = auth()->user();
 
         $post = new Post();
-        if($request->image != null){
+
             $image_path = $request->file('image')->storePublicly('posts');
             move_uploaded_file($image_path, public_path('posts'));
             $post->image_path = $image_path;
-        }
+
         $post->title = Str::title($request->title);
         $post->slug = Str::slug($request->title);
         $post->body = $request->body;
@@ -80,7 +84,15 @@ class PostController extends Controller
         $post->save();
         $post->tags()->sync($tags);
 
-        return redirect()->route('post.index');
+        //To add notification
+        $latestPost = Post::orderBy('created_at', 'desc')->first();
+        $notification = new Notification();
+        $notification->type = 'Post';
+        $notification->content = Str::title($request->title);
+        $notification->post()->associate($latestPost);
+        $notification->save();
+
+        return redirect()->route('post.index')->with('success', 'Post created successfully');
 
 
     }
@@ -95,7 +107,16 @@ class PostController extends Controller
     {
         //
 
-        return view('post.show', ['post' => $post]);
+        $thisNotification = Notification::where('post_id', $post->id)->firstOrFail();
+        if($thisNotification->status == 'new'){
+            $thisNotification->status = 'seen';
+            $thisNotification->save();
+        }
+        $comments = Comment::where('post_id', $post->id)->get();
+        // $post = Post::where('id', $request->post_id)->firstOrFail();
+        $post->views = $post->views + 1;
+        $post->save();
+        return view('post.show', ['post' => $post, 'comments'=> $comments]);
     }
 
     /**
@@ -150,7 +171,7 @@ class PostController extends Controller
         $post->tags()->sync($tags);
         $post->save();
 
-        return redirect()->route('post.show', ['post' => $post->id]);
+        return redirect()->route('post.show', ['post' => $post->id])->with('success', 'Post editted successfully');
 
     }
 
@@ -168,4 +189,21 @@ class PostController extends Controller
 
         return redirect()->route('post.index');
     }
+
+    public function search(Request $request)
+    {
+        //
+        if($request->has('post_search')){
+            $posts = Post::search($request->post_search)
+                ->paginate(7);
+        }else{
+            $posts = Post::paginate(7);
+        }
+        return view('post.index', compact('posts'));
+    }
+
+
+
+
+
 }

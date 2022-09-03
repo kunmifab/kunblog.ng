@@ -1,23 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>All Categories</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-<body>
+@extends('layouts.app')
+@section('title', 'Categories')
+
+@section('content')
+
+<div class="container m-3 p-4 text-white" style="background-color: #3a3053">
     <div class="text-center mt-2">
-        <h1>All Categories</h1>
+        <h3>All Categories</h3>
     </div>
     <br>
     <div class="container">
-        <h4>Click <a href="{{ route('category.create') }}">Here</a> to create new category</h4>
-        <table class="table table-border">
+        @if (auth()->check())
+        @if (auth()->user()->role->id == 1)
+        <h5>Click <a href="{{ route('category.create') }}">Here</a> to create new category</h5>
+        @endif
+        @endif
+
+
+        @foreach ($categories as $category)
+        <div class="d-flex justify-content-center text-center text-white mt-4 bg-secondary ">
+            <a class="text-white h6 highAnc" href="{{ route('category.show', ['slug'=> $category->slug]) }}">{{$category->name}}</a>
+        </div>
+        @endforeach
+
+        </div>
+        {{-- <table class="table table-border text-white">
 
 
             <thead>
@@ -32,25 +38,28 @@
                 @foreach ($categories as $category)
                 <tr>
                     <td>{{$loop->iteration}}</td>
-                    <td><a href="{{ route('category.index', ['slug'=> $category->slug]) }}">{{$category->name}}</a></td>
+                    <td><a class="text-white" href="{{ route('category.index', ['slug'=> $category->slug]) }}">{{$category->name}}</a></td>
                     <td>
-                        <button class="btn border" onclick="deleteCat(this)" data-id="{{$category->id}}">Delete</button>
+                        <button class="btn border ancBtn text-white" onclick="deleteCat(this)" data-id="{{$category->id}}">Delete</button>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
-        </table>
-        <div>
-            <p class="text-muted">Click <a href="{{route('post.index')}}">Here</a> to view all posts</p>
-            <p class="text-muted">Click <a href="{{route('tag.index')}}">Here</a> to view all tags</p>
-            <p class="text-muted">Click <a href="{{route('user.index')}}">Here</a> to view all users</p>
-            <p class="text-muted">Click <a href="{{route('dashboard')}}">Here</a> to go to the dashboard</p>
-        </div>
+        </table> --}}
+
     </div>
 <form action="" method="POST" id="deleteCat">
     @csrf
     @method('DELETE')
 </form>
+</div>
+@endsection
+
+@section('css')
+{{-- <x-head.tinymce-config/> --}}
+@endsection
+
+@section('scripts')
 
 <script>
     const deleteCat = (e) => {
@@ -66,6 +75,7 @@
         deleteCat.setAttribute('action', '');
     }
 </script>
-</body>
-</html>
+ @endsection
+
+
 

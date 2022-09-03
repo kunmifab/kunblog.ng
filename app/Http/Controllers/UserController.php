@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\User;
@@ -11,7 +13,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth.admin.user')->only(['edit', 'update']);
+        $this->middleware('auth.admin.user')->only(['edit', 'update', 'index']);
     }
     /**
      * Display a listing of the resource.
@@ -58,9 +60,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
         //
+
+        $thisNotification = Notification::where('user_id', $user->id)->firstOrFail();
+        if($thisNotification->status == 'new'){
+            $thisNotification->status = 'seen';
+            $thisNotification->save();
+        }
+        $myPosts = Post::where('user_id', $user->id)->get();
+        return view('user.show', ['user' => $user, 'myPosts'=>$myPosts]);
     }
 
     /**
@@ -105,8 +115,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
         //
+        $user = User::findOrFail($user->id);
+        $user->delete();
+
+        return redirect()->route('user.index');
     }
 }

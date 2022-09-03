@@ -1,0 +1,514 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow-x: hidden !important;
+    font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    display: table;
+}
+
+footer {
+    background-color: grey;
+    display: table-row;
+    height: 0;
+}
+
+button:focus {
+    outline: none !important;
+}
+
+h1 {
+    font-size: 4rem !important;
+}
+
+h1, h3, h4 {
+    font-weight: 700 !important;
+}
+
+nav li {
+    display: inline;
+    margin: 0 1rem;
+    cursor: pointer;
+    color: #97949d;
+}
+
+nav li a:hover {
+    color: #190d55 !important;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.nav-buttons {
+
+    position: absolute;
+    top: 1%;
+    right: 10%;
+}
+
+#log-in {
+    background-color: #ffffff;
+    color: #97949d;
+}
+
+.logo {
+    font-size: 1.3rem;
+    color: #444349;
+}
+
+button {
+    padding: 0.5rem 1.8rem;
+    background-color: #2bd1d1;
+    border: none;
+    color: #ffffff;
+}
+
+button:hover {
+    background-color: #9be3e2;
+}
+
+.btnGet {
+    border-radius: 2rem;
+}
+
+.top-illustration {
+    height: 50vh;
+}
+
+.illustration-img {
+    right: -50%;
+    width: 100%;
+    height: 100%;
+}
+
+.illustrationDiv {
+    width: 60vw;
+    height: 60vh;
+}
+
+.inputContainer {
+    padding: 2.5rem 1rem !important;
+    background-image: url(./images/bg-shorten-desktop.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #3a3053 ;
+    border-radius: 7px;
+    transform: translateY(40%);
+}
+
+
+
+.inputContainer input {
+    padding: 0.6rem 0;
+    width: 100%;
+    border-radius: 6px;
+    border: none;
+    padding-left: 1rem;
+}
+
+.inputContainer input:focus, .inputContainer button:focus, button {
+    outline: none;
+}
+
+.inputContainer button {
+   width: 100%;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+}
+
+.advancedContainer {
+    background-color: #f0f1f6;
+    padding-bottom: 10rem !important;
+    margin-bottom: -1rem !important;
+}
+
+.advancedContainer img {
+    background-color: #3a3053;
+    padding: 1rem;
+    border-radius: 50%;
+    position: absolute;
+    top: -10%;
+}
+
+.advancedContainer .adCol {
+    background-color: #ffffff;
+    margin: 1rem;
+    position: relative;
+    padding: 3rem;
+}
+
+.advancedContainer .adColRow::before {
+    content: "";
+    background-color: #2cd0cf;
+    width: 70%;
+    height: 1vh;
+    position: absolute;
+    top: 55%;
+    left: 10%;
+}
+
+.advancedContainer .adCol + .adCol {
+    transform: translateY(50px);
+}
+
+.advancedContainer .adCol + .adCol + .adCol {
+    transform: translateY(100px);
+}
+
+.adCol a:hover{
+    background-color: #9be3e2 !important;
+}
+
+.top-illustration a:hover{
+    background-color: #9be3e2 !important;
+}
+
+.card a:hover{
+    background-color: #9be3e2 !important;
+}
+
+.advancedContainer p {
+    color: #9f9fa7;
+}
+
+.advancedDiv {
+    margin-top: 3rem;
+}
+
+.linkContainer {
+    background-color: #ffffff;
+    border-radius: 6px;
+}
+
+.linkDiv a {
+    text-decoration: none;
+    color: #2cd0cf;
+}
+
+.linkDiv a:hover {
+    font-weight: 600;
+    color: #2cd0cf;
+}
+
+.ancBtn:hover {
+    background-color: #2cd0cf !important;
+}
+
+.card {
+    border: none !important;
+}
+
+a .ancBtn {
+    background-color: #190d55;
+}
+
+.highAnc:hover {
+    text-decoration: none;
+    color: #2cd0cf !important;
+}
+
+.linkContainer button {
+    padding: 0.2rem 1.3rem;
+    border-radius: 7px;
+}
+
+.linkDiv {
+    padding-top: 1rem;
+    padding-bottom: 0.7rem;
+}
+
+.boostContainer {
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+    background-image: url(./images/bg-boost-desktop.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #3a3053;
+}
+
+.boostContainer h3 {
+    font-size: 2.5rem;
+}
+
+footer {
+    background-color: #232027 !important;
+}
+
+.footer {
+    background-color: #232027 !important;
+    color: #ffffff;
+}
+
+.footer li {
+    list-style-type: none;
+    line-height: 2rem;
+    color: #9f9fa7;
+    cursor: pointer;
+}
+
+.footer li:hover {
+    color: #58cacb;
+}
+
+.footer img {
+    cursor: pointer;
+}
+
+.footer p {
+    font-weight: 700;
+}
+
+#valueLink {
+    color: black;
+    font-weight: 600;
+}
+
+.smallIllustration {
+    display: none;
+}
+
+.toggler {
+    position: absolute;
+    top: 1%;
+    left: 40%;
+    color: #97949d;
+    cursor: pointer;
+    display: none;
+}
+
+.dropdownContents {
+    background-color: #5a4a83;
+    padding: 1rem;
+    position: absolute;
+    min-width: 90vw;
+    border-radius: 10px;
+    display: none;
+    transition: display 1s ease-in;
+    z-index: 4;
+
+}
+
+.linkHigh:hover {
+    font-size: 1.1rem !important;
+    text-decoration: none !important;
+    background-color: #2bd1d1 !important;
+    padding: 1rem;
+    border-radius: 2rem;
+}
+
+.linkNew:hover {
+    font-size: 1.1rem !important;
+    text-decoration: none !important;
+    color: #f0f1f6;
+    padding: 1rem;
+    border-radius: 2rem;
+}
+
+.linkNew {
+    background-color: #4c5374;
+    padding: 1rem;
+    text-decoration: none !important;
+    border-radius: 2rem;
+}
+
+.card {
+    border: none;
+}
+
+.dropdownContents li {
+    list-style-type: none;
+    line-height: 4rem;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.dropdownContents li a:hover {
+    color: #2bd1d1 !important;
+    text-decoration: none;
+}
+
+.dropdownContents button {
+    padding: 0.4rem 6rem;
+    margin-bottom: 1rem;
+    border-radius: 2rem;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.logoSmall {
+    display: none;
+}
+
+#smallfooter {
+    display: none;
+}
+
+.invalidin {
+    border: 2px solid red !important;
+}
+
+.invalidin::placeholder {
+    color: red;
+}
+
+
+
+@media screen and (max-width: 640px) {
+
+
+    .inputContainer {
+        background-image: url(./images/bg-boost-mobile.svg);
+        background-repeat: no-repeat;
+        max-width: 80vw;
+    }
+
+    .boostContainer {
+        background-image: url(/images/bg-boost-mobile.svg);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    #smallfooter {
+        display: block;
+    }
+
+    #bigfooter {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 993px) {
+    .dropdownContents {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 993px) {
+    .advancedContainer img {
+        background-color: #3a3053;
+        padding: 1rem;
+        border-radius: 50%;
+        position: absolute;
+        top: -10%;
+        left: 30%;
+    }
+
+    .advancedContainer .adColRow {
+        display: block;
+        width: 70%;
+        margin: auto;
+    }
+
+    .advancedContainer .adColRow::before {
+        content: "";
+        background-color: #2cd0cf;
+        width: 1vw;
+        height: 80%;
+        position: absolute;
+        top: 10%;
+        left: 50%;
+    }
+
+
+    .smallIllustration {
+        display: block;
+       margin-bottom: 7rem;
+    }
+
+    .smallIllustration img {
+        width: 105%;
+    }
+
+    .smallIllustration h1 {
+        font-size: 1.7rem !important;
+    }
+
+    .bigIllustration {
+        display: none;
+    }
+
+
+    .navContainer {
+        display: none;
+    }
+
+    .toggler {
+        display: block;
+
+    }
+
+    .logoSmall {
+        display: block;
+        list-style-type: none;
+        margin-left: 1rem;
+    }
+
+    .logo {
+        font-size: 2rem;
+    }
+
+    .copy {
+        position: relative;
+        min-width: 60vw;
+        margin-top: 1rem;
+    }
+}
+
+.flicker {
+    animation-name: flicker;
+    animation-timing-function: ease-in-out;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-delay: .5s;
+}
+
+#notificationBell .shake{
+    animation-name: shake;
+  animation-timing-function: ease-in-out;
+  animation-duration: .5s;
+  animation-iteration-count: infinite;
+  animation-delay: .5s;
+}
+
+@keyframes shake {
+    0%,
+    100% {
+      transform: rotate(0deg);
+      color: red;
+    }
+    20%,
+    60% {
+      transform: rotate(6deg);
+    }
+    40%,
+    80% {
+      transform: rotate(-6deg);
+    }
+  }
+
+@keyframes flicker {
+    0%,
+    100% {
+      color: white;
+    }
+    20%,
+    60% {
+      color: yellow;
+    }
+    40%,
+    80% {
+      color: rgb(139, 110, 110);
+    }
+  }

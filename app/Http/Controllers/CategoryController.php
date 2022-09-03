@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -61,9 +62,12 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($slug)
     {
         //
+        $category = Category::where('slug', $slug)->firstOrFail();
+        $catPosts = Post::where('category_id', $category->id)->paginate(10);
+        return view('category.show', ['category'=>$category, 'catPosts'=>$catPosts]);
     }
 
     /**

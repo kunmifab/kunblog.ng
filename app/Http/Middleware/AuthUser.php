@@ -21,11 +21,12 @@ class AuthUser
     public function handle(Request $request, Closure $next)
     {
 
-
-
+        if(!auth()->check()){
+            return abort(401);
+        }
         $user = auth()->user()->role->id;
 
-        if($user == 4 || $user == 1){
+        if($user == 1 || $user == 2){
             return $next($request);
         }else{
             return abort(401);

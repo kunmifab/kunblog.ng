@@ -16,9 +16,12 @@ class AuthAdminUser
      */
     public function handle(Request $request, Closure $next)
     {
+        if(!auth()->check()){
+            return abort(401);
+        }
         $user = auth()->user()->role->id;
 
-        if($user != 4){
+        if($user != 1){
             return abort(401);
         }
         return $next($request);

@@ -19,12 +19,14 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->string('body');
-            $table->string('image_path')->nullable();
+            $table->longText('body');
+            $table->string('image_path');
+            $table->bigInteger('views')->default(0);
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Category::class);
             $table->timestamps();
         });
+
     }
 
     /**

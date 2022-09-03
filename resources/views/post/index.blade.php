@@ -1,87 +1,138 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>All Posts</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-<body>
-    <div class="text-center mt-2">
-        <h1>All Posts</h1>
-    </div>
-    <br>
-    <div class="container">
-        @if (auth()->user()->role->id == 4 || auth()->user()->role->id == 1)
-        <h4>Click <a href="{{ route('post.create') }}">Here</a> to create new post</h4>
-        @else
-        <h4>You are only allowed to edit posts in relation to your role as an Editor.</h4>
-        @endif
+@extends('layouts.app')
+@section('title', 'Posts')
 
-        <table class="table table-border">
+@section('content')
+
+<div class="container">
 
 
+
+    <div class="panel-body">
+        <form method="GET" action="{{ route('search') }}">
+
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" name="post_search" class="form-control"
+                            placeholder="Search by name" value="{{ old('post_search') }}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <button class="btn text-white" style="background-color: #2bd1d1">Search</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {{-- <table class="table text-center">
             <thead>
-                <tr>
-                    <th>SN</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Author</th>
-                    <th>Actions</th>
-                </tr>
+                <th>#Id</th>
+                <th>Name</th>
+                <th>Create Date</th>
+                <th>Updated Date</th>
             </thead>
-
             <tbody>
-                @foreach ($posts as $post)
+                @if($posts->count())
+                @foreach($posts as $key => $post)
                 <tr>
-                    <td>{{$loop->iteration}}</td>
-                    <td><a href="{{ route('post.show', ['post'=> $post->id]) }}">{{$post->title}}</a></td>
-                    <td>{{$post->category->name}}</td>
-                    <td>{{$post->author->name}}</td>
-                    <td>
-                        @if (auth()->user()->role->id == 4 || auth()->user()->role->id == 3)
-                        <a class="btn border" href="{{route('post.edit', ['post' => $post->id])}}">Edit</a>
-                        @endif
-
-                        @if (auth()->user()->role->id == 4)
-                            <button class="btn border" onclick="deletePost(this)" data-id="{{$post->id}}">Delete</button>
-                        @endif
-                    </td>
-
+                    <td>{{ ++$key }}</td>
+                    <td>{{ $post->title }}</td>
+                    <td>{{ $post->created_at }}</td>
+                    <td>{{ $post->updated_at }}</td>
                 </tr>
                 @endforeach
+                @else
+                <tr>
+                    <td colspan="4">There are no data.</td>
+                </tr>
+                @endif
             </tbody>
-        </table>
+        </table> --}}
+    </div>
 
-        <div>
-            <p class="text-muted">Click <a href="{{route('category.index')}}">Here</a> to view all categories</p>
-            <p class="text-muted">Click <a href="{{route('tag.index')}}">Here</a> to view all tags</p>
-            <p class="text-muted">Click <a href="{{route('user.index')}}">Here</a> to view all users</p>
-            <p class="text-muted">Click <a href="{{route('dashboard')}}">Here</a> to go to the dashboard</p>
+    @if(session()->get('success'))
+    <div class="alert alert-success">
+        {{ session()->get('success') }}
+    </div>
+  @endif
+
+    <div class="row mb-5">
+        <div class="col-lg-9 col-12">
+            <div class="text-lg-center mt-2">
+                <h3>All Posts</h3>
+            </div>
+            <br>
+
+            <div class="container">
+                @if (auth()->check())
+
+
+                @if (auth()->user()->role->id == 1 || auth()->user()->role->id == 2)
+                <h4>Click <a href="{{ route('post.create') }}">Here</a> to create new post</h4>
+                @endif
+                @endif
+
+                <div class="row mb-4">
+                    @foreach ($paginatePosts as $post)
+                    <div class="col-lg-6 col-12">
+                        <div class="card w-50" >
+                            <img class="card-img-top" src="{{asset($post->image_path)}}" alt="{{$post->title}}">
+                            <div class="card-body">
+                                <p><a class="text-muted text-decoration-none" title="{{$post->title}}" href="{{ route('post.show', ['post'=> $post->id]) }}">{{$post->title}}</a></p>
+                                <p>{{substr($post->body,5,50).'...'}}</p>
+                                <a class="btn text-white" style="background-color: #2bd1d1" href="{{ route('post.show', ['post'=> $post->id]) }}">Read More...</a>
+                            </div>
+                          </div>
+                    </div>
+
+                    @endforeach
+                </div>
+                 {{-- Pagination --}}
+        <div class="d-flex justify-content-center">
+            {{ $paginatePosts->links() }}
+        </div>
+
+        {{-- end pagination  --}}
+
+
+            </div>
+
+
+
+        </div>
+        <div class="col-lg-3 col-12 ">
+            <div class="container" style="border-bottom: 2px #0c0d7a solid; border-left: 2px #0c0d7a solid">
+                <div class="text-lg-center m-3">
+                    <h3>Most Popular</h3>
+                </div>
+            @foreach ($popularPosts->slice(0,4) as $post)
+           <a href="{{ route('post.show', ['post'=> $post->id]) }}" class="text-muted">
+               <div class="row">
+                <div class="col-lg-4 col-md-4 col-2">
+                    <img src="{{asset($post->image_path)}}" alt="" width="70px">
+                </div>
+                <div class="col-lg-8 col-md-8 col-10">
+                    <p>{{substr($post->title,0,50)}}</p>
+                    <p>{{date('Y-m-d', strtotime($post->created_at))}}</p>
+                </div>
+
+            </div>
+        </a>
+        <hr>
+            @endforeach
+
+        </div>
         </div>
     </div>
-<form action="" method="POST" id="deletePost">
-    @csrf
-    @method('DELETE')
-</form>
+</div>
+@endsection
 
-<script>
-    const deletePost = (e) => {
-        const isConfirmed = confirm('Are you sure you want to delete this post?');
-        if(!isConfirmed){
-            return
-        }
-        let id = e.getAttribute('data-id');
-        const deletePost = document.getElementById('deletePost');
-        deletePost.setAttribute('action', `post/${id}`);
-        deletePost.submit();
-        deletePost.setAttribute('action', '');
-    }
-</script>
-</body>
-</html>
+@section('css')
+
+@endsection
+
+@section('scripts')
+
+ @endsection
+
 

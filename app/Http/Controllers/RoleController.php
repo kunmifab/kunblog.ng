@@ -11,7 +11,7 @@ class RoleController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth.admin.user')->only('create', 'store', 'update', 'edit');
+        $this->middleware('auth.admin.user')->only('create', 'store', 'update', 'edit', 'index');
     }
     /**
      * Display a listing of the resource.
